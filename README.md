@@ -41,7 +41,7 @@ Para iniciar o front-end
 
 ## Projeto desenvolvido para entrevista de emprego com os seguintes requisitos
 
-##Cenário
+## Cenário
 
 Em qualquer empresa de e-commerce é essencial que os usuários possam atualizar os preços de suas lojas para se manterem competitivos e manterem seus preços alinhados com os custos de operação. Essa tarefa parece simples, porém quando falamos de lojas com milhares de produtos, se torna essencial a existência de uma ferramenta que permita atualizar os produtos de forma massiva e com recursos adicionais para evitar erros que possam prejudicar o negócio. Você foi encarregado de desenvolver essa ferramenta e após uma série de reuniões com as áreas envolvidas, os seguintes requisitos foram levantados:
 
@@ -55,7 +55,7 @@ Em qualquer empresa de e-commerce é essencial que os usuários possam atualizar
 
 Estabeleceu-se a regra que, ao reajustar o preço de um pacote, o mesmo arquivo deve conter os reajustes dos preços dos componentes do pacote de modo que o preço final da soma dos componentes seja igual ao preço do pacote.
 
-##Exemplos 1 -
+## Exemplos 1 -
 
 Imagine o produto PACK GUARANA 1L – 6 Unidades
 
@@ -65,7 +65,7 @@ O preço do pack é de R$ 24,00. O preço do componente é de R$ 4,00.
 
 Se o arquivo do time de precificação pedir um reajuste do preço do pacote para R$ 30,00, o mesmo arquivo deve conter o reajuste do preço do componente, no caso mudando o preço para R$ 5,00 (6 x 5 = 30)
 
-##Exemplos 2 -
+## Exemplos 2 -
 
 Imaginando o produto KIT ESCOVA DE DENTE + PASTA DE DENTE, vendido a R$ 25,00 O produto é composto por 1 unidade do produto ESCOVA DE DENTES (R$ 10,00) e 1 unidade do produto PASTA DE DENTE (R$ 15,00). Se o preço da ESCOVA DE DENTES for reajustado para R$ 20,00, o arquivo também deve conter um reajuste do preço do pacote para R$ 35,00 (R$ 20,00 + R$ 15,00)
 
