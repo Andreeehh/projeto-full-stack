@@ -1,0 +1,27 @@
+.error {
+  background-color: #ffcccc; /* Vermelho claro */
+}
+
+.warning {
+  background-color: #fff2cc; /* Amarelo claro */
+}
+
+.success {
+  background-color: #d9f2d9; /* Verde claro */
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead {
+  background-color: #ccc;
+}
+
+th {
+  border: 1px solid #ccc;
+  font-weight: bold;
+  padding: 10px;
+  text-align: left;
+}

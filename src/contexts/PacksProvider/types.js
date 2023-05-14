@@ -1,0 +1,2 @@
+export const PACKS_LOADING = 'PACKS_LOADING';
+export const PACKS_SUCCESS = 'PACKS_SUCCESS';
