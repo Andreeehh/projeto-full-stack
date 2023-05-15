@@ -8,6 +8,16 @@ import { ProductsContext } from '../../contexts/ProductsProvider/context';
 import { loadProducts } from '../../contexts/ProductsProvider/actions';
 import { PacksContext } from '../../contexts/PacksProvider/context';
 import { loadPacks } from '../../contexts/PacksProvider/actions';
+import {
+  getProduct,
+  getProductsRelatedToPack,
+  getSingleProductsRelatedToPack,
+  packIdRelated,
+  productIdRelated,
+  updateProductPrices,
+  validateErrors,
+  validateProduct,
+} from '../../utils/productUtils';
 
 const styles = {
   button: {
@@ -80,100 +90,6 @@ export const CsvDownloadButton = ({ onButtonClicked, disabled = false }) => {
   }, [productsDispatch, packsDispatch]);
 
   useEffect(() => {
-    const getProduct = (id) => {
-      return productsState.products.filter((element) => {
-        return element.code === parseInt(id);
-      })[0];
-    };
-    const packIdRelated = (id) => {
-      let packId = 0;
-      packsState.packs.forEach((element) => {
-        if (element.product_id == id) {
-          packId = element.pack_id;
-        }
-      });
-      return packId;
-    };
-    const isSingleProductPack = (id) => {
-      let boolean = false;
-      packsState.packs.forEach((element) => {
-        if (element.pack_id == id) {
-          boolean = true;
-        }
-      });
-      return boolean;
-    };
-    const getProductsRelatedToPack = (id) => {
-      const products = [];
-      let newPackProductPrice = 0;
-      packsState.packs.forEach((pack) => {
-        if (id == pack.pack_id) {
-          const packContentProduct = getProduct(pack.product_id);
-          if (!packContentProduct.newPrice) {
-            packContentProduct.newPrice = packContentProduct.sales_price;
-          }
-          newPackProductPrice += packContentProduct.newPrice * parseFloat(pack.qty);
-          products.push(packContentProduct);
-        }
-      });
-      const packProduct = getProduct(id);
-      packProduct.newPrice = newPackProductPrice;
-      products.push(packProduct);
-      return products;
-    };
-    const validateProduct = (products) => {
-      products.forEach((prod) => {
-        if (prod.errorMessage == 'Produto inexistente') {
-          return;
-        }
-        if (prod.cost_price > prod.newPrice) {
-          prod.errorMessage = 'Produto com valor menor que o seu custo';
-          return;
-        }
-        if (prod.newPrice > prod.sales_price + prod.sales_price * 0.1) {
-          prod.errorMessage = 'Produto com valor maior que 10% do antigo valor';
-          return;
-        }
-        if (prod.newPrice < prod.sales_price - prod.sales_price * 0.1) {
-          prod.errorMessage = 'Produto com valor menor que 10% do antigo valor';
-          return;
-        }
-        prod.errorMessage = 'Válido';
-      });
-    };
-    const validateErrors = (products) => {
-      let boolean = true;
-      if (products || products.length == 0) {
-        return false;
-      }
-      for (let i = 0; i < products.length; i++) {
-        if (products[i].errorMessage !== 'Válido') {
-          boolean = false;
-          break;
-        }
-      }
-      return boolean;
-    };
-    const getSingleProductsRelatedToPack = (id, fatherProduct) => {
-      const packProduct = getProduct(id);
-      for (let i = 0; i < packsState.packs.length; i++) {
-        if (id == parseInt(packsState.packs[i].product_id)) {
-          packProduct.newPrice = fatherProduct.newPrice / parseFloat(packsState.packs[i].qty);
-          break;
-        }
-      }
-      return packProduct;
-    };
-
-    const productIdRelated = (id) => {
-      let productId = 0;
-      packsState.packs.forEach((element) => {
-        if (element.pack_id == id) {
-          productId = element.product_id;
-        }
-      });
-      return productId;
-    };
     setIsLoaded(false);
     if (data != null) {
       setIsValid(false);
@@ -181,19 +97,24 @@ export const CsvDownloadButton = ({ onButtonClicked, disabled = false }) => {
       let index = 0;
       for (const item of data) {
         if (item.product_code) {
-          const product = getProduct(item.product_code);
+          const product = getProduct(item.product_code, productsState);
           if (product) {
             product.newPrice = parseFloat(item.new_price);
-            const packId = packIdRelated(product.code);
+            const packId = packIdRelated(product.code, packsState);
             if (packId > 0) {
-              const productsRelated = getProductsRelatedToPack(packId);
+              const productsRelated = getProductsRelatedToPack(packId, productsState, packsState);
               productsRelated.forEach((prod) => {
                 newProducts.push(prod);
               });
             } else {
-              const singleProductPackId = productIdRelated(product.code);
+              const singleProductPackId = productIdRelated(product.code, packsState);
               if (singleProductPackId > 0) {
-                const singleProduct = getSingleProductsRelatedToPack(singleProductPackId, product);
+                const singleProduct = getSingleProductsRelatedToPack(
+                  singleProductPackId,
+                  product,
+                  productsState,
+                  packsState,
+                );
                 newProducts.push(singleProduct);
               }
               newProducts.push(product);
