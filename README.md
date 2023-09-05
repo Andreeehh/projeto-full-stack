@@ -4,6 +4,8 @@ Este projeto consiste em um sistema de integração entre o front-end e o back-e
 
 ## Configuração
 
+Para configurar o banco, crie um schema com um nome para ser utilizado nas configurações do projeto, no MySqlWorkBench por exemplo, e depois de criá-lo, o selecione dando um duplo click e executando o seguinte script
+
 BANCO
 
 ```
@@ -61,6 +63,10 @@ Instalar node(ou yarn) para poder executar os comandos
 Para baixar os módulos necessários utilize
 
 ### npm i
+
+Para limpar os erros de prettier no código clonado, execute o comando
+
+### npx prettier --write "src/**/*.js" "src/**/*.jsx"
 
 ## Back-end
 
