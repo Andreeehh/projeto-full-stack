@@ -18,6 +18,7 @@ import {
   validateErrors,
   validateProduct,
 } from '../../utils/productUtils';
+import './styles.css';
 
 const styles = {
   button: {
@@ -49,6 +50,9 @@ const styles = {
     fontSize: '16px',
     fontWeight: 'bold',
     margin: '10px 0px',
+  },
+  customFileInput: {
+    display: 'none', // Oculta o input padrão de arquivo
   },
 };
 
@@ -126,14 +130,19 @@ export const CsvDownloadButton = ({ onButtonClicked, disabled = false }) => {
         index++;
       }
       validateProduct(newProducts);
-      setProducts(newProducts);
-      setIsValid(validateErrors(newProducts));
+      if (file) {
+        setProducts(newProducts);
+      } else {
+        setData(null);
+      }
+      setIsValid(validateErrors(newProducts) && file);
       setIsLoaded(true);
     }
-  }, [data, productsState, packsState, isValid]);
+  }, [data, productsState, packsState, isValid, file]);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
+    event.target.value = '';
   };
 
   const handleProductsUpdate = () => {
@@ -145,6 +154,8 @@ export const CsvDownloadButton = ({ onButtonClicked, disabled = false }) => {
     try {
       const response = await axios.post(`http://localhost:${port}/update-products`, { products });
       alert(response.data);
+      setFile(null);
+      setProducts([]);
     } catch (error) {
       alert(error);
     }
@@ -190,6 +201,7 @@ export const CsvDownloadButton = ({ onButtonClicked, disabled = false }) => {
       setError(true);
       return;
     };
+
     Papa.parse(file, {
       header: true,
       complete: (results) => {
