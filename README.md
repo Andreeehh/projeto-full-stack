@@ -56,6 +56,11 @@ Antes de iniciar o projeto é necessário configurar as variáveis de ambiente. 
 
 4. PORT_SERVER: porta para o servidor, caso vazio vira com padrão 5000
 
+Instalar node(ou yarn) para poder executar os comandos
+
+Para baixar os módulos necessários utilize
+
+### npm i
 
 ## Back-end
 
