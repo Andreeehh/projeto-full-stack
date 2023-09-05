@@ -4,6 +4,48 @@ Este projeto consiste em um sistema de integração entre o front-end e o back-e
 
 ## Configuração
 
+BANCO
+
+```
+CREATE TABLE products
+(
+code bigint PRIMARY KEY, # CODIGO DO PRODUTO
+name varchar(100) NOT NULL, # NOME DO PRODUTO
+cost_price decimal(9,2) NOT NULL, # CUSTO DO PRODUTO
+sales_price decimal(9,2) NOT NULL # PRE�O DE VENDA DO PRODUTO
+);
+
+INSERT INTO products VALUES (16,'AZEITE PORTUGUÊS EXTRA VIRGEM GALLO 500ML',18.44,20.49);
+INSERT INTO products VALUES (18,'BEBIDA ENERGÉTICA VIBE 2L',8.09,8.99);
+INSERT INTO products VALUES (19,'ENERGÉTICO RED BULL ENERGY DRINK 250ML',6.56,7.29);
+INSERT INTO products VALUES (20,'ENERGÉTICO RED BULL ENERGY DRINK 355ML',9.71,10.79);
+INSERT INTO products VALUES (21,'BEBIDA ENERGÉTICA RED BULL RED EDITION 250ML',10.71,11.71);
+INSERT INTO products VALUES (22,'ENERGÉTICO RED BULL ENERGY DRINK SEM AÇÚCAR 250ML',6.74,7.49);
+INSERT INTO products VALUES (23,'ÁGUA MINERAL BONAFONT SEM GÁS 1,5L',2.15,2.39);
+INSERT INTO products VALUES (24,'FILME DE PVC WYDA 28CMX15M',3.59,3.99);
+INSERT INTO products VALUES (26,'ROLO DE PAPEL ALUMÍNIO WYDA 30CMX7,5M',5.21,5.79);
+INSERT INTO products VALUES (1000,'BEBIDA ENERGÉTICA VIBE 2L - 6 UNIDADES',48.54,53.94);
+INSERT INTO products VALUES (1010,'KIT ROLO DE ALUMINIO + FILME PVC WYDA',8.80,9.78);
+INSERT INTO products VALUES (1020,'SUPER PACK RED BULL VARIADOS - 6 UNIDADES',51.81,57.00);
+
+CREATE TABLE packs
+(
+id bigint AUTO_INCREMENT PRIMARY KEY, # id primario da tabela
+pack_id bigint NOT NULL, # id do produto pack
+product_id bigint NOT NULL, # id do produto componente
+qty bigint NOT NULL, # quantidade do produto componente no pack
+CONSTRAINT FOREIGN KEY (pack_id) REFERENCES products(code),
+CONSTRAINT FOREIGN KEY (product_id) REFERENCES products(code)
+);
+
+INSERT INTO packs (pack_id,product_id, qty) VALUES (1000,18,6);
+INSERT INTO packs (pack_id,product_id, qty) VALUES (1010,24,1);
+INSERT INTO packs (pack_id,product_id, qty) VALUES (1010,26,1);
+INSERT INTO packs (pack_id,product_id, qty) VALUES (1020,19,3);
+INSERT INTO packs (pack_id,product_id, qty) VALUES (1020,21,3);
+```
+
+
 Antes de iniciar o projeto é necessário configurar as variáveis de ambiente. Para isso, é necessário criar um arquivo .env com base no arquivo .env.example. As variáveis de ambiente que precisam ser configuradas são:
 
 1.DB_USER: seu usuário do MySQL
@@ -91,43 +133,3 @@ Diante desse cenário, você deve construir um sistema com os seguintes requisit
 15. Ao clica em ATUALIZAR, o sistema deve salvar o novo preço no banco de dados e já deixar a tela pronta para o envio de um novo arquivo.
 16. O preço de custo dos pacotes também deve ser atualizado como a soma dos custos dos seus componentes. Os preço de custo dos produtos que não são pacotes não deve ser atualizado
 
-BANCO
-
-```
-CREATE TABLE products
-(
-code bigint PRIMARY KEY, # CODIGO DO PRODUTO
-name varchar(100) NOT NULL, # NOME DO PRODUTO
-cost_price decimal(9,2) NOT NULL, # CUSTO DO PRODUTO
-sales_price decimal(9,2) NOT NULL # PRE�O DE VENDA DO PRODUTO
-);
-
-INSERT INTO products VALUES (16,'AZEITE PORTUGUÊS EXTRA VIRGEM GALLO 500ML',18.44,20.49);
-INSERT INTO products VALUES (18,'BEBIDA ENERGÉTICA VIBE 2L',8.09,8.99);
-INSERT INTO products VALUES (19,'ENERGÉTICO RED BULL ENERGY DRINK 250ML',6.56,7.29);
-INSERT INTO products VALUES (20,'ENERGÉTICO RED BULL ENERGY DRINK 355ML',9.71,10.79);
-INSERT INTO products VALUES (21,'BEBIDA ENERGÉTICA RED BULL RED EDITION 250ML',10.71,11.71);
-INSERT INTO products VALUES (22,'ENERGÉTICO RED BULL ENERGY DRINK SEM AÇÚCAR 250ML',6.74,7.49);
-INSERT INTO products VALUES (23,'ÁGUA MINERAL BONAFONT SEM GÁS 1,5L',2.15,2.39);
-INSERT INTO products VALUES (24,'FILME DE PVC WYDA 28CMX15M',3.59,3.99);
-INSERT INTO products VALUES (26,'ROLO DE PAPEL ALUMÍNIO WYDA 30CMX7,5M',5.21,5.79);
-INSERT INTO products VALUES (1000,'BEBIDA ENERGÉTICA VIBE 2L - 6 UNIDADES',48.54,53.94);
-INSERT INTO products VALUES (1010,'KIT ROLO DE ALUMINIO + FILME PVC WYDA',8.80,9.78);
-INSERT INTO products VALUES (1020,'SUPER PACK RED BULL VARIADOS - 6 UNIDADES',51.81,57.00);
-
-CREATE TABLE packs
-(
-id bigint AUTO_INCREMENT PRIMARY KEY, # id primario da tabela
-pack_id bigint NOT NULL, # id do produto pack
-product_id bigint NOT NULL, # id do produto componente
-qty bigint NOT NULL, # quantidade do produto componente no pack
-CONSTRAINT FOREIGN KEY (pack_id) REFERENCES products(code),
-CONSTRAINT FOREIGN KEY (product_id) REFERENCES products(code)
-);
-
-INSERT INTO packs (pack_id,product_id, qty) VALUES (1000,18,6);
-INSERT INTO packs (pack_id,product_id, qty) VALUES (1010,24,1);
-INSERT INTO packs (pack_id,product_id, qty) VALUES (1010,26,1);
-INSERT INTO packs (pack_id,product_id, qty) VALUES (1020,19,3);
-INSERT INTO packs (pack_id,product_id, qty) VALUES (1020,21,3);
-```
