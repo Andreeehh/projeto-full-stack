@@ -46,12 +46,21 @@ INSERT INTO packs (pack_id,product_id, qty) VALUES (1020,21,3);
 ```
 
 
-Antes de iniciar o projeto é necessário configurar as variáveis de ambiente. Para isso, é necessário criar um arquivo .env com base no arquivo .env.example. As variáveis de ambiente que precisam ser configuradas são:
+Antes de iniciar o projeto é necessário configurar as variáveis de ambiente. Para isso, é necessário criar um arquivo .env na raiz do projeto com base no arquivo .env.example, que também se encontra na raiz. As variáveis de ambiente que precisam ser configuradas são:
 
-1.DB_USER: seu usuário do MySQL
-2.DB_PASSWORD: sua senha do MySQL
-3.DB_NAME: nome do seu banco de dados MySQL
-4.PORT_SERVER: porta para o servidor
+1. DB_USER: seu usuário do MySQL
+
+2. DB_PASSWORD: sua senha do MySQL
+
+3. DB_NAME: nome do seu banco de dados MySQL
+
+4. PORT_SERVER: porta para o servidor, caso vazio vira com padrão 5000
+
+Instalar node(ou yarn) para poder executar os comandos
+
+Para baixar os módulos necessários utilize
+
+### npm i
 
 ## Back-end
 
